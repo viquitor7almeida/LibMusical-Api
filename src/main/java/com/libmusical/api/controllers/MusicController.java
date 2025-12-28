@@ -1,28 +1,29 @@
 package com.libmusical.api.controllers;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.libmusical.api.dto.MusicDTO;
-import com.libmusical.api.models.MusicModel;
+import com.libmusical.api.dto.MusicRequestDTO;
+import com.libmusical.api.dto.MusicResponseDTO;
 import com.libmusical.api.services.MusicService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/music")
+@RequestMapping("/musics")
+@RequiredArgsConstructor
 public class MusicController {
 
     private final MusicService musicService;
 
-    public MusicController(MusicService musicService) {
-        this.musicService = musicService;
-    }
-    
     @PostMapping
-    public ResponseEntity<MusicModel> create(@RequestBody MusicDTO dto) {
-        MusicModel savedMusic = musicService.createMusic(dto); 
-        return ResponseEntity.status(201).body(savedMusic);
+    public ResponseEntity<MusicResponseDTO> create(@RequestBody @Valid MusicRequestDTO dto) {
+        return ResponseEntity.status(201).body(musicService.create(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MusicResponseDTO>> getAll() {
+        return ResponseEntity.ok(musicService.findAll());
     }
 }

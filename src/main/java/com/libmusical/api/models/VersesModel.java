@@ -21,5 +21,4 @@ public class VersesModel {
     @JoinColumn(name = "music_id")
     private MusicModel music;
 
-    // Getters e Setters
 }
