@@ -9,7 +9,7 @@ public class VersesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String categories;
+    //private String categories;
 
     @Column(columnDefinition = "TEXT")
     private String lyrics;
@@ -21,5 +21,4 @@ public class VersesModel {
     @JoinColumn(name = "music_id")
     private MusicModel music;
 
-    // Getters e Setters
 }
