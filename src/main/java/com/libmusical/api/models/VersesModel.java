@@ -9,7 +9,7 @@ public class VersesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String categories;
+    //private String categories;
 
     @Column(columnDefinition = "TEXT")
     private String lyrics;
