@@ -42,6 +42,13 @@ public class MusicService {
                 .collect(Collectors.toList());
     }
 
+    public List<MusicResponseDTO> findByUserId (Long userId){
+        return musicRepository.findByUserId(userId)
+            .stream()
+            .map(MusicResponseDTO::new)
+            .collect(Collectors.toList());
+    }
+
     private void copyDtoToEntity(MusicRequestDTO dto, MusicModel entity, UserModel user) {
         entity.setComposers(dto.composers());
         entity.setUser(user);

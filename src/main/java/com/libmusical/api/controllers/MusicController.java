@@ -26,4 +26,9 @@ public class MusicController {
     public ResponseEntity<List<MusicResponseDTO>> getAll() {
         return ResponseEntity.ok(musicService.findAll());
     }
+
+    @GetMapping("/id")
+    public ResponseEntity<List<MusicResponseDTO>> getByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok(musicService.findByUserId(userId));
+    }
 }
