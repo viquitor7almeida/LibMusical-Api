@@ -4,12 +4,11 @@ RESTful API developed for managing musical catalogs and user-centric music libra
 
 ## Technologies
 
-* **Java 17**: Core language using Streams API, Optional, and Records.
-* **Spring Boot 3**: Framework base.
-* **Spring Data JPA**: Data persistence abstraction.
-* **Bean Validation**: Metadata-driven data integrity.
-* **Lombok**: Boilerplate code reduction.
-* **H2/PostgreSQL**: Relational database support.
+* **Java 17**
+* **Spring Boot 3**
+* **Spring Data JPA**
+* **Bean Validation**
+* **Lombok**
 
 ## Layered Architecture
 
