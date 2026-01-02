@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/musics")
 @RequiredArgsConstructor
@@ -27,8 +28,20 @@ public class MusicController {
         return ResponseEntity.ok(musicService.findAll());
     }
 
-    @GetMapping("/id")
+    @GetMapping("/user/{id}")
     public ResponseEntity<List<MusicResponseDTO>> getByUserId(@PathVariable Long userId){
         return ResponseEntity.ok(musicService.findByUserId(userId));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        musicService.delete(id);
+        return ResponseEntity.noContent().build(); 
+        }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<MusicResponseDTO> update(@PathVariable Long id, @Valid @RequestBody MusicRequestDTO dto) {
+        MusicResponseDTO response = musicService.update(id, dto);
+        return ResponseEntity.ok(response);
     }
 }
