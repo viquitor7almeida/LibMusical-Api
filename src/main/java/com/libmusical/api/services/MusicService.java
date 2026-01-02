@@ -42,8 +42,39 @@ public class MusicService {
                 .collect(Collectors.toList());
     }
 
+    public List<MusicResponseDTO> findByUserId (Long userId){
+        return musicRepository.findByUserId(userId)
+            .stream()
+            .map(MusicResponseDTO::new)
+            .collect(Collectors.toList());
+    }
+
+        @Transactional
+    public MusicResponseDTO update(Long id, MusicRequestDTO dto) {
+        MusicModel music = musicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Music not found with id: " + id));
+
+        UserModel user = userRepository.findById(dto.userId())
+                .orElseThrow(() -> new UserNotFoundException(dto.userId()));
+
+        copyDtoToEntity(dto, music, user);
+
+        return new MusicResponseDTO(musicRepository.save(music));
+    }
+
+    @Transactional
+    public void delete(Long id){
+        if (!musicRepository.existsById(id)){
+            throw new RuntimeException("Music not found id:" + id);
+        }
+        musicRepository.deleteById(id);
+            
+    }
+
     private void copyDtoToEntity(MusicRequestDTO dto, MusicModel entity, UserModel user) {
         entity.setComposers(dto.composers());
         entity.setUser(user);
     }
+
+
 }
