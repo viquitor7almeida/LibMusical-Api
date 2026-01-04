@@ -3,23 +3,43 @@ package com.libmusical.api.services;
 import com.libmusical.api.models.UserModel;
 import com.libmusical.api.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.libmusical.api.dto.UserRequestDTO;
 import com.libmusical.api.dto.UserResponseDTO;
 import com.libmusical.api.exceptions.UserNotFoundException;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<UserResponseDTO> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponseDTO::new)
+                .toList();
+    }
+
+    public UserResponseDTO findById(Long id) {
+        UserModel user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        return new UserResponseDTO(user);
     }
 
     public UserResponseDTO create(UserRequestDTO dto) {
         UserModel user = new UserModel();
-        copyDtoToEntity(dto, user);
+        user.setName(dto.name());
+        user.setEmail(dto.email());
+        user.setPassword(passwordEncoder.encode(dto.password()));
         return new UserResponseDTO(userRepository.save(user));
     }
 
@@ -27,22 +47,24 @@ public class UserService {
         UserModel user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         
-        copyDtoToEntity(dto, user);
+        user.setName(dto.name());
+        user.setEmail(dto.email());
+        
         return new UserResponseDTO(userRepository.save(user));
     }
 
-    // Método privado para centralizar a cópia de dados
-    private void copyDtoToEntity(UserRequestDTO dto, UserModel entity) {
-        entity.setName(dto.name());
-        entity.setEmail(dto.email());
-        if (dto.password() != null) {
-            // Aqui entraria a criptografia: encoder.encode(dto.password())
-            entity.setPassword(dto.password()); 
-        }
+    public void updatePassword(Long id, String newPassword) {
+        UserModel user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 
     public void delete(Long id) {
-        if (!userRepository.existsById(id)) throw new UserNotFoundException(id);
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException(id);
+        }
         userRepository.deleteById(id);
     }
 }
