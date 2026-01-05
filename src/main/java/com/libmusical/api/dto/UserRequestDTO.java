@@ -13,6 +13,6 @@ public record UserRequestDTO(
     String email,
     
     @NotBlank 
-    @Size(min = 6) 
+    @Size(min = 2) 
     String password
 ) {}

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @Component
 public class SecurityFilterConfig extends OncePerRequestFilter {
@@ -30,13 +31,16 @@ public class SecurityFilterConfig extends OncePerRequestFilter {
         var token = recoverToken(request);
         
         if (token != null) {
-            var email = jwtService.extractEmail(token);
-            var user = userRepository.findByEmail(email).orElse(null);
+            try {
+                var email = jwtService.extractEmail(token);
+                var user = userRepository.findByEmail(email).orElse(null);
 
-            if (user != null) {
-                // Se o usuário existe, autenticamos ele no contexto do Spring
-                var authentication = new UsernamePasswordAuthenticationToken(user, null, null);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (user != null) {
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (Exception e) {
+                SecurityContextHolder.clearContext();
             }
         }
         filterChain.doFilter(request, response);
@@ -44,7 +48,7 @@ public class SecurityFilterConfig extends OncePerRequestFilter {
 
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
-        if (authHeader == null) return null;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) return null;
         return authHeader.replace("Bearer ", "");
     }
 }
