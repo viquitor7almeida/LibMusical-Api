@@ -13,9 +13,30 @@ public class ChordSymbolsModel {
     @JoinColumn(name = "music_id")
     private MusicModel music;
 
-    // "TEXT" garante que o SQLite não limite o tamanho e preserve a formatação
     @Column(columnDefinition = "TEXT")
     private String fullSheet;
 
-    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MusicModel getMusic() {
+        return music;
+    }
+
+    public void setMusic(MusicModel music) {
+        this.music = music;
+    }
+
+    public String getFullSheet() {
+        return fullSheet;
+    }
+
+    public void setFullSheet(String fullSheet) {
+        this.fullSheet = fullSheet;
+    }
 }
