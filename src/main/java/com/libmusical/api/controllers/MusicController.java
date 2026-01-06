@@ -1,7 +1,7 @@
 package com.libmusical.api.controllers;
 
-import com.libmusical.api.dto.MusicRequestDTO;
-import com.libmusical.api.dto.MusicResponseDTO;
+import com.libmusical.api.dto.Music.MusicRequestDTO;
+import com.libmusical.api.dto.Music.MusicResponseDTO;
 import com.libmusical.api.services.MusicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

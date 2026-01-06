@@ -1,7 +1,7 @@
 package com.libmusical.api.services;
 
-import com.libmusical.api.dto.ChordSymbolsRequestDTO;
-import com.libmusical.api.dto.ChordSymbolsResponseDTO;
+import com.libmusical.api.dto.ChordSymbols.ChordSymbolsRequestDTO;
+import com.libmusical.api.dto.ChordSymbols.ChordSymbolsResponseDTO;
 import com.libmusical.api.models.ChordSymbolsModel;
 import com.libmusical.api.models.MusicModel;
 import com.libmusical.api.repositories.ChordSymbolsRepository;

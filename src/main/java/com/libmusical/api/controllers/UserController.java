@@ -1,8 +1,8 @@
 package com.libmusical.api.controllers;
 
-import com.libmusical.api.dto.UserRequestDTO;
-import com.libmusical.api.dto.UserResponseDTO;
-import com.libmusical.api.dto.UserPasswordUpdateDTO;
+import com.libmusical.api.dto.User.UserPasswordUpdateDTO;
+import com.libmusical.api.dto.User.UserRequestDTO;
+import com.libmusical.api.dto.User.UserResponseDTO;
 import com.libmusical.api.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

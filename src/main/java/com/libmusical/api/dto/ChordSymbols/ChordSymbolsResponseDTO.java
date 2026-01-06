@@ -1,4 +1,4 @@
-package com.libmusical.api.dto;
+package com.libmusical.api.dto.ChordSymbols;
 
 import com.libmusical.api.models.ChordSymbolsModel;
 

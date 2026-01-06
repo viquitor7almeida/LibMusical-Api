@@ -1,7 +1,7 @@
 package com.libmusical.api.services;
 
-import com.libmusical.api.dto.MusicRequestDTO;
-import com.libmusical.api.dto.MusicResponseDTO;
+import com.libmusical.api.dto.Music.MusicRequestDTO;
+import com.libmusical.api.dto.Music.MusicResponseDTO;
 import com.libmusical.api.models.MusicModel;
 import com.libmusical.api.models.UserModel;
 import com.libmusical.api.repositories.MusicRepository;

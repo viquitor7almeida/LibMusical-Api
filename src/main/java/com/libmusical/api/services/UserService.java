@@ -5,8 +5,8 @@ import com.libmusical.api.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.libmusical.api.dto.UserRequestDTO;
-import com.libmusical.api.dto.UserResponseDTO;
+import com.libmusical.api.dto.User.UserRequestDTO;
+import com.libmusical.api.dto.User.UserResponseDTO;
 import com.libmusical.api.exceptions.UserNotFoundException;
 
 import java.util.List;

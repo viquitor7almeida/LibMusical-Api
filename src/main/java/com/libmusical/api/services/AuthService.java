@@ -1,7 +1,7 @@
 package com.libmusical.api.services;
 
-import com.libmusical.api.dto.AuthenticationDTO;
-import com.libmusical.api.dto.LoginResponseDTO;
+import com.libmusical.api.dto.AuthLogin.AuthenticationDTO;
+import com.libmusical.api.dto.AuthLogin.LoginResponseDTO;
 import com.libmusical.api.models.UserModel;
 import com.libmusical.api.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
