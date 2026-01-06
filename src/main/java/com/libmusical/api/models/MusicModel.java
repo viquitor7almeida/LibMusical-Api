@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "musics")
-@Data // Esta anotação cria automaticamente o setUser, getUser
+@Data
 public class MusicModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
