@@ -1,4 +1,4 @@
-package com.libmusical.api.dto;
+package com.libmusical.api.dto.AuthLogin;
 
 import jakarta.validation.constraints.NotBlank;
 

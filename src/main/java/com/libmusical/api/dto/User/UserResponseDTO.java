@@ -1,4 +1,4 @@
-package com.libmusical.api.dto;
+package com.libmusical.api.dto.User;
 
 import com.libmusical.api.models.UserModel;
 
