@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor // Cria o construtor automaticamente para os campos 'final'
+@RequiredArgsConstructor
 public class MusicService {
     
     private final MusicRepository musicRepository;
@@ -23,15 +23,12 @@ public class MusicService {
 
     @Transactional
     public MusicResponseDTO create(MusicRequestDTO dto) {
-        //Busca o dono da música
         UserModel user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new UserNotFoundException(dto.userId()));
                 
-        //Cria a entidade e mapeia os dados
         MusicModel music = new MusicModel();
         copyDtoToEntity(dto, music, user);
 
-        //Salva e converte para ResponseDTO
         return new MusicResponseDTO(musicRepository.save(music));
     }
 
