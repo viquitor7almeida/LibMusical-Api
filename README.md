@@ -27,6 +27,7 @@ The project follows a strict separation of concerns to ensure low coupling and h
 
 ```bash
 mvn spring-boot:run
+```
 
 ## DB Diagram
 <img width="813" height="386" alt="lib-musical-diagram" src="https://github.com/user-attachments/assets/ed2b5aa4-320c-4b79-85cd-48b0ce0214a2" />
