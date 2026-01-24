@@ -12,7 +12,7 @@ public class MusicModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String composers;
-
+    private String name;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserModel user; 
