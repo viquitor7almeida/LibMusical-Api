@@ -1,9 +1,11 @@
 package com.libmusical.api.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "verses")
+@Data
 public class VersesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
