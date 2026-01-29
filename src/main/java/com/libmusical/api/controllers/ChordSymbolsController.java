@@ -28,7 +28,7 @@ public class ChordSymbolsController {
         return ResponseEntity.ok(chordSymbolsService.findAll());
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/music/{id}")
     public ResponseEntity<List<ChordSymbolsResponseDTO>> getByUserId(@PathVariable Long musicId){
         return ResponseEntity.ok(chordSymbolsService.findByMusicId(musicId));
     }
