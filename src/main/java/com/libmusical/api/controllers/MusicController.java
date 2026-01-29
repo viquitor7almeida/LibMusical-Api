@@ -7,9 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/musics")
@@ -23,12 +23,17 @@ public class MusicController {
         return ResponseEntity.status(201).body(musicService.create(dto));
     }
 
+    @PatchMapping("/{id}/audio")
+    public ResponseEntity<MusicResponseDTO> uploadAudio(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(musicService.uploadAudio(id, file));
+    }
+
     @GetMapping
     public ResponseEntity<List<MusicResponseDTO>> getAll() {
         return ResponseEntity.ok(musicService.findAll());
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<MusicResponseDTO>> getByUserId(@PathVariable Long userId){
         return ResponseEntity.ok(musicService.findByUserId(userId));
     }
@@ -37,7 +42,7 @@ public class MusicController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         musicService.delete(id);
         return ResponseEntity.noContent().build(); 
-        }
+    }
     
     @PutMapping("/{id}")
     public ResponseEntity<MusicResponseDTO> update(@PathVariable Long id, @Valid @RequestBody MusicRequestDTO dto) {
