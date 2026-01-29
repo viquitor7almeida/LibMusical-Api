@@ -11,8 +11,13 @@ public class MusicModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String composers;
+    
     private String name;
+
+    private String audioUrl;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserModel user; 

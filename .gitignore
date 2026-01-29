@@ -34,3 +34,6 @@ build/
 
 ### DBA ###
 lib-musical.db
+
+###Arquivos Temporários ###
+uploads/*
