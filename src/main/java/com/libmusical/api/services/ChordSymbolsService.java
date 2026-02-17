@@ -24,14 +24,12 @@ public class ChordSymbolsService {
     }
 
     @Transactional
-    public ChordSymbolsResponseDTO create(ChordSymbolsRequestDTO dto) {
-        MusicModel music = musicRepository.findById(dto.musicId())
-                .orElseThrow(() -> new RuntimeException("Music not found with id: " + dto.musicId()));
-
+    public ChordSymbolsResponseDTO create(Long musicId, ChordSymbolsRequestDTO dto) {
+        MusicModel music = musicRepository.findById(musicId)
+                .orElseThrow(() -> new RuntimeException("Music not found with id: " + musicId));
         ChordSymbolsModel chordSymbols = new ChordSymbolsModel();
         chordSymbols.setMusic(music);
         chordSymbols.setFullSheet(dto.fullSheet());
-
         return new ChordSymbolsResponseDTO(chordSymbolsRepository.save(chordSymbols));
     }
 
@@ -49,19 +47,13 @@ public class ChordSymbolsService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public ChordSymbolsResponseDTO update(Long id, ChordSymbolsRequestDTO dto) {
-        ChordSymbolsModel chordSymbols = chordSymbolsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Chord symbol not found with id: " + id));
-
-        MusicModel music = musicRepository.findById(dto.musicId())
-                .orElseThrow(() -> new RuntimeException("Music not found with id: " + dto.musicId()));
-
-        chordSymbols.setMusic(music);
-        chordSymbols.setFullSheet(dto.fullSheet());
-
-        return new ChordSymbolsResponseDTO(chordSymbolsRepository.save(chordSymbols));
-    }
+@Transactional
+public ChordSymbolsResponseDTO update(Long id, ChordSymbolsRequestDTO dto) {
+    ChordSymbolsModel chordSymbols = chordSymbolsRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Chord symbol not found with id: " + id));
+    chordSymbols.setFullSheet(dto.fullSheet());
+    return new ChordSymbolsResponseDTO(chordSymbolsRepository.save(chordSymbols));
+}
 
     @Transactional
     public void delete(Long id) {
