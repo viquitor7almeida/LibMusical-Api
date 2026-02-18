@@ -8,6 +8,7 @@ import com.libmusical.api.repositories.MusicRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,15 +29,15 @@ import java.util.stream.Collectors;
 public class MusicService {
     
     private final MusicRepository musicRepository;
-    private final Path rootLocation = Paths.get("uploads");
+
+    @Value("${app.upload.dir:uploads}")
+    private String uploadDir;
 
     @Transactional
     public MusicResponseDTO create(MusicRequestDTO dto) {
         UserModel user = getAuthenticatedUser();
-                
         MusicModel music = new MusicModel();
         copyDtoToEntity(dto, music, user);
-
         return new MusicResponseDTO(musicRepository.save(music));
     }
 
@@ -46,12 +47,12 @@ public class MusicService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Música não encontrada"));
 
         UserModel userLogado = getAuthenticatedUser();
-
         if (!music.getUser().getId().equals(userLogado.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para alterar esta música.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sem permissão.");
         }
 
         try {
+            Path rootLocation = Paths.get(uploadDir);
             if (!Files.exists(rootLocation)) {
                 Files.createDirectories(rootLocation);
             }
@@ -70,15 +71,13 @@ public class MusicService {
     }
 
     public List<MusicResponseDTO> findAll() {
-        return musicRepository.findAll()
-                .stream()
+        return musicRepository.findAll().stream()
                 .map(MusicResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     public List<MusicResponseDTO> findByUserId(Long userId){
-        return musicRepository.findByUserId(userId)
-            .stream()
+        return musicRepository.findByUserId(userId).stream()
             .map(MusicResponseDTO::new)
             .collect(Collectors.toList());
     }
@@ -89,9 +88,8 @@ public class MusicService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Música não encontrada"));
 
         UserModel userLogado = getAuthenticatedUser();
-
         if (!music.getUser().getId().equals(userLogado.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para alterar esta música.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sem permissão.");
         }
 
         copyDtoToEntity(dto, music, music.getUser());
@@ -104,9 +102,16 @@ public class MusicService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Música não encontrada"));
 
         UserModel userLogado = getAuthenticatedUser();
-
         if (!music.getUser().getId().equals(userLogado.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para deletar esta música.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Sem permissão.");
+        }
+
+        try {
+            if (music.getAudioUrl() != null) {
+                Files.deleteIfExists(Paths.get(uploadDir).resolve(music.getAudioUrl()));
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao remover arquivo físico: " + e.getMessage());
         }
 
         musicRepository.delete(music);
@@ -119,7 +124,6 @@ public class MusicService {
     private void copyDtoToEntity(MusicRequestDTO dto, MusicModel entity, UserModel user) {
         entity.setName(dto.name());
         entity.setComposers(dto.composers());
-        entity.setAudioUrl(dto.audioUrl());
         entity.setUser(user);
     }
 }
