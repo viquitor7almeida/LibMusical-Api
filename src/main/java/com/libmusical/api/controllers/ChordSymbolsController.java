@@ -18,18 +18,20 @@ public class ChordSymbolsController {
 
     private final ChordSymbolsService chordSymbolsService;
 
-    @PostMapping
-    public ResponseEntity<ChordSymbolsResponseDTO> create(@RequestBody @Valid ChordSymbolsRequestDTO dto) {
-        return ResponseEntity.status(201).body(chordSymbolsService.create(dto));
+    @PostMapping("/music/{musicId}")
+        public ResponseEntity<ChordSymbolsResponseDTO> create(
+            @PathVariable Long musicId, 
+            @RequestBody @Valid ChordSymbolsRequestDTO dto) {
+        return ResponseEntity.status(201).body(chordSymbolsService.create(musicId, dto));
     }
-
+    
     @GetMapping
     public ResponseEntity<List<ChordSymbolsResponseDTO>> getAll() {
         return ResponseEntity.ok(chordSymbolsService.findAll());
     }
 
-    @GetMapping("/music/{id}")
-    public ResponseEntity<List<ChordSymbolsResponseDTO>> getByUserId(@PathVariable Long musicId){
+    @GetMapping("/music/{musicId}")
+    public ResponseEntity<List<ChordSymbolsResponseDTO>> getByMusicId(@PathVariable Long musicId) {
         return ResponseEntity.ok(chordSymbolsService.findByMusicId(musicId));
     }
 
