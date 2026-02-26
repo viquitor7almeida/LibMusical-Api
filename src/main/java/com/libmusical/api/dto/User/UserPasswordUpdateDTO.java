@@ -5,6 +5,6 @@ import jakarta.validation.constraints.Size;
 
 public record UserPasswordUpdateDTO(
     @NotBlank 
-    @Size(min = 6) 
+    @Size(min = 2) 
     String newPassword
 ) {}

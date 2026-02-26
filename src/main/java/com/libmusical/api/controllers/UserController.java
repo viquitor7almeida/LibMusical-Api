@@ -3,6 +3,7 @@ package com.libmusical.api.controllers;
 import com.libmusical.api.dto.User.UserPasswordUpdateDTO;
 import com.libmusical.api.dto.User.UserRequestDTO;
 import com.libmusical.api.dto.User.UserResponseDTO;
+import com.libmusical.api.dto.User.UserUpdateDTO;
 import com.libmusical.api.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody @Valid UserRequestDTO dto) {
+    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
         return ResponseEntity.ok(userService.update(id, dto));
     }
 
