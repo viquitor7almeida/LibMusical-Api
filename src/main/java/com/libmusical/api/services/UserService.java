@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.libmusical.api.dto.User.UserRequestDTO;
 import com.libmusical.api.dto.User.UserResponseDTO;
+import com.libmusical.api.dto.User.UserUpdateDTO;
 import com.libmusical.api.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class UserService {
         return new UserResponseDTO(userRepository.save(user));
     }
 
-    public UserResponseDTO update(Long id, UserRequestDTO dto) {
+    public UserResponseDTO update(Long id, UserUpdateDTO dto) {
         UserModel userLogado = getAuthenticatedUser();
 
         if (!id.equals(userLogado.getId())) {
