@@ -23,6 +23,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.libmusical.api.enums.MusicType;
 
 @Service
 @RequiredArgsConstructor
@@ -76,8 +77,9 @@ public class MusicService {
                 .collect(Collectors.toList());
     }
 
-    public List<MusicResponseDTO> findByUserId(Long userId){
-        return musicRepository.findByUserId(userId).stream()
+    public List<MusicResponseDTO> findByUserIdAndType(Long userId, MusicType type){
+        return musicRepository.findByUserIdAndType(userId, type).stream()
+
             .map(MusicResponseDTO::new)
             .collect(Collectors.toList());
     }
@@ -125,5 +127,6 @@ public class MusicService {
         entity.setName(dto.name());
         entity.setComposers(dto.composers());
         entity.setUser(user);
+        entity.setType(dto.type());
     }
 }

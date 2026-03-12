@@ -2,6 +2,8 @@ package com.libmusical.api.dto.Music;
 
 import com.libmusical.api.models.MusicModel;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.libmusical.api.enums.MusicType;
+
 
 public record MusicResponseDTO(
     Long id,
@@ -9,7 +11,8 @@ public record MusicResponseDTO(
     String name,
     Long userId,
     String userName,
-    String audioUrl
+    String audioUrl,
+    MusicType type
 ) {
     public MusicResponseDTO(MusicModel music) {
         this(
@@ -23,7 +26,8 @@ public record MusicResponseDTO(
                     .path("/uploads/")
                     .path(music.getAudioUrl())
                     .toUriString() 
-                : null
+                : null,
+            music.getType()
         );
     }
 }
