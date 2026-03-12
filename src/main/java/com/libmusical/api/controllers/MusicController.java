@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.libmusical.api.enums.MusicType;
+
 
 import java.util.List;
 
@@ -28,15 +30,10 @@ public class MusicController {
         return ResponseEntity.ok(musicService.uploadAudio(id, file));
     }
 
-    @GetMapping
-    public ResponseEntity<List<MusicResponseDTO>> getAll() {
-        return ResponseEntity.ok(musicService.findAll());
-    }
-
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<MusicResponseDTO>> getByUserId(@PathVariable Long userId){
-        return ResponseEntity.ok(musicService.findByUserId(userId));
-    }
+    public ResponseEntity<List<MusicResponseDTO>> getByUserId(@PathVariable Long userId, @RequestParam(required = false) MusicType type){
+        return ResponseEntity.ok(musicService.findByUserIdAndType(userId, type));
+        }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

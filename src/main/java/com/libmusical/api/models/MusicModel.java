@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data; 
 import java.util.List;
 
+import com.libmusical.api.enums.MusicType;
+
 @Entity
 @Table(name = "musics")
 @Data
@@ -17,6 +19,10 @@ public class MusicModel {
     private String name;
 
     private String audioUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="type", nullable=false )
+    private MusicType type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
