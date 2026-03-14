@@ -28,9 +28,12 @@ public class MusicModel {
     @JoinColumn(name = "user_id")
     private UserModel user; 
 
-    @OneToMany(mappedBy = "music")
+    @OneToMany(mappedBy = "music", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VersesModel> verses;
 
-    @OneToMany(mappedBy = "music")
+    @OneToMany(mappedBy = "music", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChordSymbolsModel> chords;
+
+    @OneToMany(mappedBy = "music", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MusicChordsModel> musicChords;
 }
