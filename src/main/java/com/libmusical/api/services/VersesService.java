@@ -24,7 +24,6 @@ public class VersesService {
 
     @Transactional
     public VersesResponseDTO create(VersesRequestDTO dto) {
-        // Buscamos a música para garantir que ela existe antes de associar ao verso
         MusicModel music = musicRepository.findById(dto.musicId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Música não encontrada"));
 
@@ -53,7 +52,6 @@ public class VersesService {
         VersesModel verse = versesRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Verso não encontrado"));
 
-        // Se o DTO permitir mudar a música do verso, buscamos a nova música
         MusicModel music = musicRepository.findById(dto.musicId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Música não encontrada"));
 
@@ -73,5 +71,6 @@ public class VersesService {
         entity.setLyrics(dto.lyrics());
         entity.setChords(dto.chords());
         entity.setMusic(music);
+        entity.setPosition(dto.position());
     }
 }

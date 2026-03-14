@@ -1,9 +1,11 @@
 package com.libmusical.api.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "chord_symbols")
+@Data
 public class ChordSymbolsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,28 +17,4 @@ public class ChordSymbolsModel {
 
     @Column(columnDefinition = "TEXT")
     private String fullSheet;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public MusicModel getMusic() {
-        return music;
-    }
-
-    public void setMusic(MusicModel music) {
-        this.music = music;
-    }
-
-    public String getFullSheet() {
-        return fullSheet;
-    }
-
-    public void setFullSheet(String fullSheet) {
-        this.fullSheet = fullSheet;
-    }
 }
