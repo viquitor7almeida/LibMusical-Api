@@ -9,6 +9,8 @@ public record VersesRequestDTO(
 
     String chords,
 
+    Integer position,
+
     @NotNull(message = "O ID da música é obrigatório")
     Long musicId
 ) {}

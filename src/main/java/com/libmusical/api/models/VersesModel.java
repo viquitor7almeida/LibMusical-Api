@@ -17,6 +17,8 @@ public class VersesModel {
     @Column(columnDefinition = "TEXT")
     private String chords;
 
+    private Integer position;
+
     @ManyToOne
     @JoinColumn(name = "music_id")
     private MusicModel music;

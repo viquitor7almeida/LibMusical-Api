@@ -6,14 +6,17 @@ public record VersesResponseDTO(
     Long id,
     String lyrics,
     String chords,
-    Long musicId
+    Long musicId,
+    Integer position
+
 ) {
     public VersesResponseDTO(VersesModel verse) {
         this(
             verse.getId(),
             verse.getLyrics(),
             verse.getChords(),
-            verse.getMusic().getId()
+            verse.getMusic().getId(),
+            verse.getPosition()
         );
     }
 }
